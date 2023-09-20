@@ -1,10 +1,12 @@
 package com.app.thread.runnables;
 
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.ResourceUtils;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class FileReaderThread extends Thread {
     public FileReaderThread() {
@@ -12,9 +14,11 @@ public class FileReaderThread extends Thread {
     }
 
     private BufferedReader getFileReader() throws IOException {
-        var file = ResourceUtils.getFile("classpath:sample.txt");
-        var fileReader = new FileReader(file);
-        return new BufferedReader(fileReader);
+        var inputStream = getClass().getResourceAsStream("/sample.txt");
+
+        if(inputStream == null) throw new IOException("File sample.txt not found");
+
+        return new BufferedReader(new InputStreamReader(inputStream));
     }
 
     @Override
