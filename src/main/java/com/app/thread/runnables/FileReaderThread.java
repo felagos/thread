@@ -1,6 +1,6 @@
 package com.app.thread.runnables;
 
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.ResourceUtils;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -12,8 +12,7 @@ public class FileReaderThread extends Thread {
     }
 
     private BufferedReader getFileReader() throws IOException {
-        var resource = new ClassPathResource("sample.txt");
-        var file = resource.getFile();
+        var file = ResourceUtils.getFile("classpath:sample.txt");
         var fileReader = new FileReader(file);
         return new BufferedReader(fileReader);
     }

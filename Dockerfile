@@ -1,5 +1,5 @@
 # Stage 1: Build the application
-FROM gradle:jdk20-alpine as builder
+FROM gradle:jdk20 as builder
 WORKDIR /app
 COPY build.gradle .
 COPY src src

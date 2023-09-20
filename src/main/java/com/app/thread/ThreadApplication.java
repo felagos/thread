@@ -14,9 +14,9 @@ public class ThreadApplication {
 		var fileThreadB = new FileReaderThread();
 		var fileThreadC = new FileReaderThread();
 
-		fileThreadA.start();
-		fileThreadB.start();
-		fileThreadC.start();
+		//fileThreadA.start();
+		//fileThreadB.start();
+		//fileThreadC.start();
 
 		Runnable runnable = () -> {
 			System.out.println("Running from lamda expression");
