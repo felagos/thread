@@ -13,5 +13,10 @@ COPY --from=builder /app/build/libs/*.jar app.jar
 # Expose the port your Spring Boot app runs on
 EXPOSE 8080
 
-# Start the Spring Boot application
-CMD ["java", "-jar", "app.jar"]
+# Add Spring Boot DevTools as a dependency
+#RUN echo "dependencies { compileOnly 'org.springframework.boot:spring-boot-devtools' }" >> build.gradle
+
+RUN gradle --stop
+
+# Start the Spring Boot application with live reload
+CMD ["java", "-Dspring.devtools.restart.enabled=false", "-jar", "app.jar", "--no-daemon", "--no-configure-on-demand"]

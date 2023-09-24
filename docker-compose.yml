@@ -12,25 +12,25 @@ services:
     networks:
       - thread-net
 
-  spring-boot-app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: builder
-    container_name: spring-boot-app
-    ports:
-      - "8080:8080"
-    depends_on:
-      - postgres
-    environment:
-      DB_URL: jdbc:postgresql://postgres:5432/thread
-      DB_USER: postgres
-      DB_PASSWORD: postgres
-    volumes:
-      - ./src:/app/src
-    command: ["gradle", "bootRun"]
-    networks:
-      - thread-net
+  #spring-boot-app:
+  #  build:
+  #    context: .
+  #    dockerfile: Dockerfile
+  #    target: builder
+  #  container_name: spring-boot-app
+  #  command: ["gradle", "bootRun"]
+  #  ports:
+  #    - "8080:8080"
+  #  depends_on:
+  #    - postgres
+  #  environment:
+  #    DB_URL: jdbc:postgresql://postgres:5432/thread
+  #    DB_USER: postgres
+  #    DB_PASSWORD: postgres
+  #  volumes:
+  #    - ./src:/app/src
+  #  networks:
+  #    - thread-net
 
 networks:
   thread-net:
