@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import java.util.StringTokenizer;
 import java.util.concurrent.Callable;
 
+@Component
 public class UserProcessor implements Callable<Integer> {
 
     private final String userRecord;

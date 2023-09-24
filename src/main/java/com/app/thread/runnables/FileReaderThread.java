@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 
 public class FileReaderThread extends Thread {
     public FileReaderThread() {
-        System.out.println("Instancing thread " + Thread.currentThread().threadId());
+        System.out.println("Instancing thread " + Thread.currentThread().getName());
     }
 
     private BufferedReader getFileReader() throws IOException {
