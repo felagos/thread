@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 
 @SpringBootApplication
 public class ThreadApplication {
@@ -53,12 +51,21 @@ public class ThreadApplication {
 		for(String line : userContent) {
 			Future<Integer> response = executorService.submit(new UserProcessor(line, this.userService));
 			try {
-				System.out.println("Result of the operation: " + response.get());
+				// Wait for the task to complete, but only for a maximum of 1 second.
+				Integer totalSaved = response.get(1, TimeUnit.SECONDS);
+
+				if (totalSaved == null) {
+					System.out.println("Task timed out");
+				} else {
+					System.out.println("Result of the operation: " + totalSaved);
+				}
+			} catch (TimeoutException e) {
+				System.out.println("Task timed out " + e.getMessage());
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
 		}
-		//executorService.shutdown();
+		executorService.shutdown();
 		System.out.println("Execution over !!");
 	}
 
