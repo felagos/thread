@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import java.util.StringTokenizer;
 import java.util.concurrent.Callable;
 
-@Component
+
 public class UserProcessor implements Callable<Integer> {
 
     private final String userRecord;
@@ -33,9 +33,7 @@ public class UserProcessor implements Callable<Integer> {
             user.setName(tokenizer.nextToken());
             user.setId(Integer.valueOf(tokenizer.nextToken()));
 
-            this.userService.saveUser(user);
-
-            totalSaved++;
+            totalSaved += this.userService.saveUser(user);
         }
 
         System.out.println("totalSaved " + totalSaved);

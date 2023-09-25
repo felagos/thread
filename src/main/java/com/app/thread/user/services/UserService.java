@@ -4,7 +4,6 @@ import com.app.thread.user.entities.User;
 import com.app.thread.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService {
@@ -12,9 +11,8 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    @Transactional
-    public void saveUser(User user) {
-        this.userRepository.saveAndFlush(user);
+    public Integer saveUser(User user) {
+        return this.userRepository.saveUser(user);
     }
 
 }
