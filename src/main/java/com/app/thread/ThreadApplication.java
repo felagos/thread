@@ -1,6 +1,7 @@
 package com.app.thread;
 
 import com.app.thread.file.FileService;
+import com.app.thread.runnables.CleaningScheduler;
 import com.app.thread.runnables.UserProcessor;
 import com.app.thread.user.services.UserService;
 import jakarta.annotation.PostConstruct;
@@ -39,6 +40,14 @@ public class ThreadApplication {
         }
         executorService.shutdown();
         System.out.println("Execution over !!");
+    }
+
+    @PostConstruct
+    public void initScheduling() {
+        var scheduler = new CleaningScheduler();
+        var schedulerService = Executors.newSingleThreadScheduledExecutor();
+
+        schedulerService.schedule(scheduler, 5, TimeUnit.SECONDS);
     }
 
 }
