@@ -48,6 +48,8 @@ public class ThreadApplication {
         var schedulerService = Executors.newSingleThreadScheduledExecutor();
 
         schedulerService.schedule(scheduler, 5, TimeUnit.SECONDS);
+        //schedulerService.scheduleAtFixedRate(scheduler, 5, 4, TimeUnit.SECONDS);
+        //schedulerService.scheduleWithFixedDelay(scheduler, 5, 4, TimeUnit.SECONDS);
     }
 
 }
