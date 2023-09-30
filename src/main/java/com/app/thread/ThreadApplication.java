@@ -43,13 +43,47 @@ public class ThreadApplication {
     }
 
     @PostConstruct
-    public void initScheduling() {
+    public void initScheduling() throws ExecutionException, InterruptedException {
         var scheduler = new CleaningScheduler();
         var schedulerService = Executors.newSingleThreadScheduledExecutor();
 
-        schedulerService.schedule(scheduler, 5, TimeUnit.SECONDS);
+        var response = schedulerService.schedule(scheduler, 5, TimeUnit.SECONDS);
+        response.get();
+
+        schedulerService.shutdown();
         //schedulerService.scheduleAtFixedRate(scheduler, 5, 4, TimeUnit.SECONDS);
         //schedulerService.scheduleWithFixedDelay(scheduler, 5, 4, TimeUnit.SECONDS);
+    }
+
+    @PostConstruct
+    public void initComputableFuture() throws ExecutionException, InterruptedException {
+        var future = CompletableFuture.runAsync(() -> {
+            try {
+                Thread.sleep(2000);
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+            System.out.println("CompletableFuture 1");
+        });
+
+        var future2 = CompletableFuture.runAsync(() -> {
+            try {
+                Thread.sleep(4000);
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+            System.out.println("CompletableFuture 2");
+        });
+
+        var future3 = CompletableFuture.supplyAsync(() -> {
+            System.out.println("CompletableFuture 3");
+            return "CompletableFuture 3";
+        });
+
+        CompletableFuture.allOf(future, future2, future3).get();
+
+        System.out.println("Completable futures completed");
+
     }
 
 }
