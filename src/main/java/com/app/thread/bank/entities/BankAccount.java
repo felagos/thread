@@ -27,4 +27,15 @@ public class BankAccount {
 
     @OneToMany(mappedBy = "bankAccount")
     private List<BankAccountTransaction> transactions;
+
+    @Override
+    public String toString() {
+        return "BankAccount{" +
+                "accountNumber='" + accountNumber + '\'' +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", accountType='" + accountType + '\'' +
+                ", transactions=" + transactions +
+                '}';
+    }
 }

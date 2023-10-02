@@ -22,8 +22,21 @@ public class BankAccountTransaction {
     @Column(name = "transaction_type", nullable = false)
     private String trxType;
 
+    @Transient
+    private String accountNumber;
+
     @ManyToOne
     @JoinColumn(name = "accountNumber", nullable = false)
     private BankAccount bankAccount;
 
+    @Override
+    public String toString() {
+        return "BankAccountTransaction{" +
+                "idTrx='" + idTrx + '\'' +
+                ", amount=" + amount +
+                ", created=" + created +
+                ", trxType='" + trxType + '\'' +
+                ", accountNumber='" + accountNumber + '\'' +
+                '}';
+    }
 }
