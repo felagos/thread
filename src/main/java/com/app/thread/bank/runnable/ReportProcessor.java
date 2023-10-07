@@ -10,7 +10,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.concurrent.Callable;
 
-@Component
 public class ReportProcessor implements Callable<Boolean> {
 
     private final BankAccount bankAccount;
@@ -28,25 +27,24 @@ public class ReportProcessor implements Callable<Boolean> {
 
         var transactions = this.bankAccountRepository.getTransactionByAccount(bankAccount.getAccountNumber());
 
-        try (var writter = new BufferedWriter((new FileWriter((file))))) {
+        try (var writer = new BufferedWriter((new FileWriter((file))))) {
             transactions.forEach(trx -> {
                 try {
-                    var sb = new StringBuilder();
-                    sb.append("Account Number ").append(trx.getAccountNumber());
-                    sb.append("Transaction Typ ").append(trx.getTrxType());
-                    sb.append("Transaction Id ").append(trx.getIdTrx());
-                    sb.append("Transaction Amount ").append(trx.getAmount());
-                    sb.append("Transaction Date ").append(trx.getCreated());
+                    String sb = "Account Number " + trx.getAccountNumber() +
+                            "Transaction Typ " + trx.getTrxType() +
+                            "Transaction Id " + trx.getIdTrx() +
+                            "Transaction Amount " + trx.getAmount() +
+                            "Transaction Date " + trx.getCreated();
 
-                    writter.write(sb.toString());
-                    writter.newLine();
-
-                    writter.flush();
+                    writer.write(sb);
+                    writer.newLine();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
 
             });
+
+            writer.flush();
 
             reportedGenerated = true;
         } catch (IOException ex) {
